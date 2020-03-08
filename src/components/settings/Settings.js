@@ -89,10 +89,13 @@ Settings.propTypes = {
   setAllowRegistration: PropTypes.func.isRequired
 };
 
-export default connect(
-  (state, props) => ({
-    auth: state.firebase.auth,
-    settings: state.settings
-  }),
-  { setAllowRegistration, setDisableBalanceOnAdd, setDisableBalanceOnEdit }
-)(Settings);
+const mapStateToProps = state => ({
+  auth: state.firebase.auth,
+  settings: state.settings
+});
+
+export default connect(mapStateToProps, {
+  setAllowRegistration,
+  setDisableBalanceOnAdd,
+  setDisableBalanceOnEdit
+})(Settings);
