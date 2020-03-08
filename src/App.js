@@ -5,11 +5,12 @@ import store, { rrfProps } from "./store";
 import { ReactReduxFirebaseProvider } from "react-redux-firebase";
 import AppNavBar from "./components/layout/AppNavBar";
 import Dashboard from "./components/layout/Dashboard";
-
+import { UserIsAuthenticated, UserIsNotAuthenticated } from "./helpers/Auth";
 import "./App.css";
 import AddClient from "./components/clients/AddClient";
 import ClientDetails from "./components/clients/ClientDetails";
 import EditClient from "./components/clients/EditClient";
+import Login from "./components/auth/Login";
 
 function App() {
   return (
@@ -20,11 +21,31 @@ function App() {
             <AppNavBar />
             <div className="container">
               <Switch>
-                <Route exact path="/" component={Dashboard} />
-
-                <Route path="/client/add" component={AddClient} />
-                <Route path="/client/:id" component={ClientDetails} />
-                <Route path="client/edit/:id" component={EditClient} />
+                <Route
+                  exact
+                  path="/"
+                  component={UserIsAuthenticated(Dashboard)}
+                />
+                <Route
+                  exact
+                  path="/client/add"
+                  component={UserIsAuthenticated(AddClient)}
+                />
+                <Route
+                  exact
+                  path="/client/edit/:id"
+                  component={UserIsAuthenticated(EditClient)}
+                />
+                <Route
+                  exact
+                  path="/client/:id"
+                  component={UserIsAuthenticated(ClientDetails)}
+                />
+                <Route
+                  exact
+                  path="/login"
+                  component={UserIsNotAuthenticated(Login)}
+                />
               </Switch>
             </div>
           </div>

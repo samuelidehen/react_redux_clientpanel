@@ -146,7 +146,6 @@ export default compose(
     { collection: "clients", storeAs: "client", doc: props.match.params.id }
   ]),
   connect(({ firestore: { ordered }, settings }, props) => ({
-    client: ordered.client && ordered.client[0],
-    settings
+    client: ordered.client && ordered.client[0]
   }))
 )(EditClient);
