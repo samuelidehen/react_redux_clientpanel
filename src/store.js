@@ -27,14 +27,27 @@ firebase.initializeApp(firebaseConfig);
 
 const firestore = firebase.firestore();
 
-const initialState = {};
-
 const rootReducer = combineReducers({
   firebase: firebaseReducer,
   firestore: firestoreReducer,
   notify: notifyReducer,
   settings: settingsReducer
 });
+
+if (localStorage.getItem("settings") == null) {
+  // Default settings
+  const defaultSettings = {
+    disableBalanceOnAdd: true,
+    disableBalanceOnEdit: false,
+    allowRegistration: false
+  };
+
+  // Set to localStorage
+  localStorage.setItem("settings", JSON.stringify(defaultSettings));
+}
+
+// Create initial state
+const initialState = { settings: JSON.parse(localStorage.getItem("settings")) };
 
 const store = createStore(
   rootReducer,
